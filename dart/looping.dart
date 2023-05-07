@@ -6,9 +6,18 @@ main() {
 
   // starting(once) ; condition ; increment/decrement
   for (int start = 0; start <= 100; start++) {
+    /// SKIP
+    if (start == 20) {
+      // start += 5;
+      continue;
+    }
     // niche jabe
     print('niche jabe $start');
     print('Kaj korlam');
+    /// BREAK FROM LOOPING
+    if (start == 50) {
+      break;
+    }
   }
   String name = 'Rahim';
   int age = 34;
