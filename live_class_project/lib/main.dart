@@ -7,7 +7,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,137 +21,222 @@ class MyApp extends StatelessWidget {
 // cmd + s => hot reload mac
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  TextEditingController _emailTextEditingController =
+      TextEditingController(text: 'example@gmail.com');
+  TextEditingController _userNameTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Basic Widgets'),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.home_outlined),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_none),
+          ),
+        ],
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              /// elevated
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink,
-                      // minimumSize: Size(100, 40),
-                      // maximumSize: Size(1000, 40),
-                      elevation: 5,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 16),
-                      shadowColor: Colors.deepPurpleAccent,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                            color: Colors.purple,
-                            width: 3,
-                          ))),
-                  onPressed: () {},
-                  child: Text('Press')),
-              // text button
-              TextButton(
-                style: TextButton.styleFrom(),
-                onPressed: () {},
-                child: Text('Text button'),
-              ),
-              // outline button
-              OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.blue)),
-                  onPressed: () {},
-                  child: Text('Outlined button')),
-              // outline button with icon
-              OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.blue)),
-                  onPressed: () {},
-                  icon: Icon(Icons.account_tree),
-                  label: Text('Outlined button with icon')),
-              // icon button
-              IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-              // gesture detector
-              GestureDetector(
-                  onLongPress: () {
-                    print('long press');
-                  },
-                  onDoubleTap: () {
-                    print('double pressed');
-                  },
-                  onTap: () {
-                    print('Pressed');
-                  },
-                  child: Image.asset(
-                    'images/owl-two.jpg',
-                    width: 100,
-                  )),
-              // ink well
-              InkWell(
-                splashColor: Colors.yellow,
-                onLongPress: () {
-                  print('long press');
-                },
-                onDoubleTap: () {
-                  print('double pressed');
-                },
-                onTap: () {
-                  print('Pressed');
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('sdfdf'),
-                ),
-              ),
-              Card(
-                elevation: 5,
-                shadowColor: Colors.purple,
-                color: Colors.blueGrey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('MD Faysal Ahmed'),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: _emailTextEditingController,
+                  decoration: InputDecoration(
+                    label: Text('Email'),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.purple)
+                    ),
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
-                  keyboardType: TextInputType.emailAddress,
+                  controller: _userNameTextEditingController,
                   decoration: InputDecoration(
-                    hintText: 'Enter your email',
+                      label: Text('User name', style: TextStyle(
+                        color: Colors.purple
+                      ),),
+                    hintText: 'Enter your username',
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                      borderSide: BorderSide(color: Colors.purple)
+                    ),
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                      borderSide: BorderSide(color: Colors.purple, width: 2)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple, width: 1)
+                    ),
                   ),
                 ),
               ),
-              TextField(
-                controller: TextEditingController(),
-                obscureText: true,
-                onSubmitted: (value) {
-                  print(value);
-                },
-                onChanged: (value) {
-                  // print(value);
-                },
-                textInputAction: TextInputAction.done,
-                // readOnly: true,
-                textAlign: TextAlign.center,
+              ElevatedButton(
+                  onPressed: () {
+                    print(_emailTextEditingController.text);
+                    print(_userNameTextEditingController.text);
+                    _userNameTextEditingController.text = 'Meraz';
+                    _emailTextEditingController.clear();
+                  },
+                  child: Text('Submit'),
               ),
-              TextField(),
-              TextField(),
-              TextField(),
+              ListTile(
+                onTap: () {
+                  print('tapped');
+                },
+                onLongPress: () {
+                  print('On long press');
+                },
+                title: Text('Username'),
+                subtitle: Text('Designation'),
+                leading: Icon(Icons.account_circle_outlined, size: 32,),
+                trailing: Icon(Icons.arrow_forward_outlined),
+                tileColor: Colors.grey.withOpacity(0.3),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16,),
+              ),
+              SizedBox(height: 10),
+              ListTile(
+                onTap: () {
+                  print('tapped');
+                },
+                onLongPress: () {
+                  print('On long press');
+                },
+                title: Text('Username'),
+                subtitle: Text('Designation'),
+                leading: Icon(Icons.account_circle_outlined),
+                trailing: Icon(Icons.arrow_forward_outlined),
+                tileColor: Colors.grey.withOpacity(0.3),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16,),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+                ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                spacing: 20,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_emailTextEditingController.text);
+                      print(_userNameTextEditingController.text);
+                      _userNameTextEditingController.text = 'Meraz';
+                      _emailTextEditingController.clear();
+                    },
+                    child: Text('Submit'),
+                  ),
+                ],
+              )
             ],
           ),
         ),
