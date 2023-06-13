@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intro_widget/counter_screen.dart';
 
-/// Listview, divider, Scrollbar, Stack, Align, Positioned,
+/// statefulwidget
 
 void main() {
   runApp(MyApp(
@@ -18,159 +19,89 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: appName,
-        home: HomeScreen()
+        home: CounterScreen()
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
 
-  List<String> students = [
-    'Rafat',
-    'Nazmul',
-    'Rafi',
-    'Siam',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rohan',
-    'Rayhan'
-  ];
 
-  Map<int, String> universities = {
-    1 : 'BUET',
-    2 : 'DU',
-    3 : 'NSU',
-    4 : 'IUB',
-    5 : 'RUET',
-  };
+/// Intro / Widget
+class MessageScreen extends StatefulWidget {
 
+  @override
+  State<StatefulWidget> createState() {
+    print('step 1 - createState');
+    return _MessageScreenState();
+  }
+}
+
+/// State part
+class _MessageScreenState extends State<MessageScreen> {
+
+  String welcomeMessage = 'Hi';
+
+  @override
+  void initState() {
+    super.initState();
+    print('step 2 : init state');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('Step 3 : didChangeDependency');
+  }
+
+  @override
+  void didUpdateWidget(covariant MessageScreen oldWidget) {
+    print('updated');
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('Build call');
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Intro to widgets',
-          // textDirection: TextDirection.ltr,
-          style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w700,
-          wordSpacing: 0.6,
-          letterSpacing: 0.6,
-          fontSize: 24,
-            // decoration: TextDecoration.lineThrough
-        ),),
-        backgroundColor: Colors.amber,
-        centerTitle: true,
+        title: Text('Stateful widget'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Scrollbar(
-              thickness: 10,
-              // isAlwaysShown: true,
-              // interactive: true,
-              child: ListView.separated(
-                itemCount: students.length,
-                primary: false,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(students[index]),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    height: 0,
-                    color: Colors.yellow,
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: 20,
-              child: ListView.builder(
-                itemCount: students.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Text(students[index]);
-                },
-              ),
-            ),
-          ],
-        ),
-      )
-     /* body: ListView.separated(
-        itemCount: universities.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(universities.values.elementAt(index).toString()),
-            subtitle: Text(universities.keys.elementAt(index).toString()),
-          );
+      body: Center(
+        child: Text(welcomeMessage, style: TextStyle(fontSize: 24),),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          welcomeMessage = welcomeMessage == 'Hi' ? 'Hello' : 'Hi';
+          print(welcomeMessage);
+          setState(() {});
         },
-        separatorBuilder: (context, index) {
-          return Divider(
-            height: 0,
-            color: Colors.yellow,
-          );
-        },
-      )*/
-      // body: Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Stack(
-      //       children: [
-      //         Container(
-      //           width: 200,
-      //           height: 200,
-      //           color: Colors.yellow,
-      //           alignment: Alignment.center,
-      //         ),
-      //         Container(
-      //           width: 30,
-      //           height: 30,
-      //           color: Colors.pink,
-      //         ),
-      //         Positioned(
-      //           // bottom: 10,
-      //           // right: 10,
-      //           // top: 10,
-      //           // left: 10,
-      //           child: Container(
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //         Positioned.fill(
-      //           child: Align(
-      //             alignment: Alignment.center,
-      //             child: Text(
-      //               'Hello',
-      //               style: TextStyle(color: Colors.white),
-      //             ),
-      //           ),
-      //         ),
-      //         Container(
-      //           width: 500,
-      //           height: 400,
-      //           // color: Colors.black,
-      //         )
-      //       ],
-      //     ),
-      //   ],
-      // ),
+        label: Text('Change text'),
+      ),
     );
   }
+
+  void changeState() {
+    setState(() {});
+  }
+
+  @override
+  void deactivate() {
+    print('deactivce');
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    print('dispose');
+    super.dispose();
+  }
 }
+
+
+
+
+
+
+
+
+
