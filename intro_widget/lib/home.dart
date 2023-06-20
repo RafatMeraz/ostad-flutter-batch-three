@@ -8,201 +8,117 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _titleTEController = TextEditingController();
+  final TextEditingController _descriptionTEController = TextEditingController();
+
+  List<Todo> todos = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-      ),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.grey,
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.black,
-                      height: 90,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      color: Colors.greenAccent,
-                      height: 90,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.amber,
-                      height: 90,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.cyan,
-              height: 100,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.black,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: Container(
-                        color: Colors.greenAccent,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.amber,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 2,
-            child: Container(
-              color: Colors.pink,
-              height: 100,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: Colors.black,
-                        height: 90,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: Container(
-                        color: Colors.greenAccent,
-                        height: 90,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.amber,
-                        height: 90,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                todos.clear();
+                if (mounted) {
+                  setState(() {});
+                }
+              },
+              icon: const Icon(Icons.playlist_remove),
+          )
         ],
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.extended(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  barrierColor: Colors.transparent,
-                  builder: (context) {
-                    return AlertDialog(
-                      shadowColor: Colors.grey,
-                      titlePadding: const EdgeInsets.only(left: 16),
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Message'),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.close),
-                          ),
-                        ],
-                      ),
-                      content: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Welcome to our app'),
-                          Text('Welcome to our app'),
-                          Text('Welcome to our app'),
-                          Text('Welcome to our app'),
-                          Text('Welcome to our app'),
-                        ],
-                      ),
-                      contentPadding: const EdgeInsets.all(24),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      actions: [
-                        OutlinedButton(
-                            onPressed: () {}, child: const Text('Confirm'))
-                      ],
-                    );
-                  });
+      body: ListView.separated(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            onLongPress: () {
+              todos[index].isDone = !todos[index].isDone;
+              if (mounted) {
+                setState(() {});
+              }
             },
-            label: const Text('Dialog'),
-          ),
-          FloatingActionButton.extended(
-            onPressed: () {
-              // TODO - Challenge: showBottomSheet - solve this error and make bottom sheet visible
-
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useSafeArea: true,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  )),
-                  builder: (context) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Title', style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500
-                            ),),
-                            IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            )
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.pink,
-                        ),
-                      ],
-                    );
-                  });
-            },
-            label: const Text('Bottomsheet'),
-          ),
-        ],
+            leading: todos[index].isDone
+                ? const Icon(Icons.done_outline)
+                : const Icon(Icons.close),
+            title: Text(todos[index].title),
+            subtitle: Text(
+              todos[index].description,
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete_forever_outlined),
+              onPressed: () {
+                todos.removeAt(index);
+                if (mounted) {
+                  setState(() {});
+                }
+              },
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const Divider(
+            height: 0,
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showAddNewTodoModalSheet();
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
+
+  void showAddNewTodoModalSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const Text('Add New Todo'),
+                TextField(
+                  controller: _titleTEController,
+                  decoration: const InputDecoration(hintText: 'Title'),
+                ),
+                TextField(
+                  controller: _descriptionTEController,
+                  decoration: const InputDecoration(hintText: 'Description'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_titleTEController.text.trim().isNotEmpty &&
+                        _descriptionTEController.text.trim().isNotEmpty) {
+                      todos.add(Todo(_titleTEController.text.trim(),
+                          _descriptionTEController.text.trim(), false));
+                      if (mounted) {
+                        setState(() {});
+                      }
+                      _titleTEController.clear();
+                      _descriptionTEController.clear();
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Add'),
+                )
+              ],
+            ),
+          );
+        });
+  }
+}
+
+// To do
+// title, description, done
+
+class Todo {
+  String title, description;
+  bool isDone;
+
+  Todo(this.title, this.description, this.isDone);
 }
