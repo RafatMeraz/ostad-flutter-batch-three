@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// regex for email
+// TODO - Emil and password validation (password must be 8 letters)
+
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -12,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _descriptionTEController = TextEditingController();
 
   List<Todo> todos = [];
+
+  GlobalKey<FormState> todoForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView.separated(
         itemCount: todos.length,
         itemBuilder: (context, index) {
+          // if (true) {
+          //   const Text('Hello');
+          // }
           return ListTile(
             onLongPress: () {
               todos[index].isDone = !todos[index].isDone;
@@ -40,9 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {});
               }
             },
-            leading: todos[index].isDone
-                ? const Icon(Icons.done_outline)
-                : const Icon(Icons.close),
+            leading: Visibility(
+              visible: todos[index].isDone,
+              replacement: const Icon(Icons.close),
+              child: const Icon(Icons.done_outline),
+            ),
             title: Text(todos[index].title),
             subtitle: Text(
               todos[index].description,
@@ -79,34 +90,48 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                const Text('Add New Todo'),
-                TextField(
-                  controller: _titleTEController,
-                  decoration: const InputDecoration(hintText: 'Title'),
-                ),
-                TextField(
-                  controller: _descriptionTEController,
-                  decoration: const InputDecoration(hintText: 'Description'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_titleTEController.text.trim().isNotEmpty &&
-                        _descriptionTEController.text.trim().isNotEmpty) {
-                      todos.add(Todo(_titleTEController.text.trim(),
-                          _descriptionTEController.text.trim(), false));
-                      if (mounted) {
-                        setState(() {});
+            child: Form(
+              key: todoForm,
+              child: Column(
+                children: [
+                  const Text('Add New Todo'),
+                  TextFormField(
+                    controller: _titleTEController,
+                    decoration: const InputDecoration(hintText: 'Title'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Please enter your title';
                       }
-                      _titleTEController.clear();
-                      _descriptionTEController.clear();
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text('Add'),
-                )
-              ],
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _descriptionTEController,
+                    decoration: const InputDecoration(hintText: 'Description'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter your description';
+                      }
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (todoForm.currentState!.validate()) {
+                        todos.add(Todo(_titleTEController.text.trim(),
+                            _descriptionTEController.text.trim(), false));
+                        if (mounted) {
+                          setState(() {});
+                        }
+                        _titleTEController.clear();
+                        _descriptionTEController.clear();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text('Add'),
+                  )
+                ],
+              ),
             ),
           );
         });
