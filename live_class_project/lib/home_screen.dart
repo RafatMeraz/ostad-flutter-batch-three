@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:live_class_project/add_new_product_screen.dart';
 import 'package:http/http.dart';
 import 'package:live_class_project/product.dart';
+import 'package:live_class_project/update_product_screen.dart';
 
 // TODO - add a refresh button on actions button in appbar
 
@@ -41,6 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     inProgress = false;
     setState(() {});
+  }
+
+  void deleteProduct(String id) async {
+    inProgress = true;
+    setState(() {});
+    Response response =
+        await get(Uri.parse('https://crud.teamrabbil.com/api/v1/DeleteProduct/$id'));
+    print(response.body);
+    final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse['status'] == 'success') {
+      getProducts();
+    } else {
+      inProgress = false;
+      setState(() {});
+    }
   }
 
   @override
@@ -95,7 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateProductScreen(
+                                                  product: products[index])));
+                                    },
                                     leading: const Icon(Icons.edit),
                                     title: const Text('Edit'),
                                   ),
@@ -103,7 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 0,
                                   ),
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      deleteProduct(products[index].id);
+                                      Navigator.pop(context);
+                                    },
                                     leading: const Icon(
                                         Icons.delete_forever_outlined),
                                     title: const Text('Delete'),
