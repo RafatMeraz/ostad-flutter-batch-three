@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
     final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse['status'] == 'success') {
+      products.clear();
       for (var e in decodedResponse['data']) {
         products.add(Product.toJson(e));
       }
@@ -47,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('CRUD'),
+          actions: [
+            IconButton(onPressed: () {
+              getProducts();
+            }, icon: const Icon(Icons.refresh))
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
