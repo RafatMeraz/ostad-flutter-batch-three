@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+// package import
 import 'package:live_class_project/home.dart';
+// relative import
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
