@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intro_widget/ui/screens/login_screen.dart';
 import 'package:intro_widget/ui/utils/assets_utils.dart';
+import 'package:intro_widget/ui/widgets/screen_background.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -37,24 +38,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: SvgPicture.asset(
-              AssetsUtils.backgroundSVG,
-              fit: BoxFit.fitHeight,
-            ),
+      body: ScreenBackground(
+        child: Center(
+          child: SvgPicture.asset(
+            AssetsUtils.logoSVG,
+            width: 90,
+            fit: BoxFit.scaleDown,
           ),
-          Center(
-            child: SvgPicture.asset(
-              AssetsUtils.logoSVG,
-              width: 90,
-              fit: BoxFit.scaleDown,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
