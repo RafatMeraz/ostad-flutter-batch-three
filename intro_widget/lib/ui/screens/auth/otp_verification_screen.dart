@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intro_widget/ui/screens/login_screen.dart';
+import 'package:intro_widget/ui/screens/auth/login_screen.dart';
+import 'package:intro_widget/ui/screens/auth/reset_password_screen.dart';
 import 'package:intro_widget/ui/widgets/screen_background.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({Key? key}) : super(key: key);
+class OtpVerificationScreen extends StatelessWidget {
+  const OtpVerificationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +21,14 @@ class ResetPasswordScreen extends StatelessWidget {
                   height: 64,
                 ),
                 Text(
-                  'Set Password',
+                  'PIN Verification',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  'Minimum password should be 8 letters with numbers & symbols',
+                  'A 6 digits pin will sent to your email address',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.grey,
                       ),
@@ -34,22 +36,36 @@ class ResetPasswordScreen extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                const TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
+                PinCodeTextField(
+                  length: 6,
+                  obscureText: false,
+                  animationType: AnimationType.fade,
+                  keyboardType: TextInputType.number,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(5),
+                    fieldHeight: 50,
+                    fieldWidth: 40,
+                    inactiveFillColor: Colors.white,
+                    inactiveColor: Colors.red,
+                    activeColor: Colors.white,
+                    selectedColor: Colors.green,
+                    selectedFillColor: Colors.white,
+                    activeFillColor: Colors.white,
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const TextField(
-                  obscureText: true,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm Password',
-                  ),
+                  animationDuration: const Duration(milliseconds: 300),
+                  enableActiveFill: true,
+                  cursorColor: Colors.green,
+                  enablePinAutofill: true,
+                  onCompleted: (v) {},
+                  onChanged: (value) {},
+                  beforeTextPaste: (text) {
+                    print("Allowing to paste $text");
+                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                    return true;
+                  },
+                  appContext: context,
                 ),
                 const SizedBox(
                   height: 16,
@@ -59,12 +75,11 @@ class ResetPasswordScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                              (route) => false);
+                          context, MaterialPageRoute(builder: (
+                          context) => const ResetPasswordScreen()), (
+                          route) => false);
                     },
-                    child: const Text('Confirm'),
+                    child: const Text('Verify'),
                   ),
                 ),
                 const SizedBox(
