@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intro_widget/ui/screens/email_verification_screen.dart';
-import 'package:intro_widget/ui/screens/signup_screen.dart';
 import 'package:intro_widget/ui/widgets/screen_background.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 64,),
                   Text(
-                    'Get Started With',
+                    'Join With Us',
                     style: Theme
                         .of(context)
                         .textTheme
@@ -31,6 +29,33 @@ class LoginScreen extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'First name',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Last name',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const TextField(
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintText: 'Mobile',
                     ),
                   ),
                   const SizedBox(
@@ -54,32 +79,17 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => const EmailVerificationScreen()));
-                      },
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Don't have an account?",
+                        "Have an account?",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, letterSpacing: 0.5),
                       ),
                       TextButton(onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()));
-                      }, child: const Text('Sign up')),
+                        Navigator.pop(context);
+                      }, child: const Text('Sign in')),
                     ],
                   )
                 ],
