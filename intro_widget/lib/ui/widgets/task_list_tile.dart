@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intro_widget/data/models/task_list_model.dart';
 
 class TaskListTile extends StatelessWidget {
+  final VoidCallback onDeleteTap, onEditTap;
+
   const TaskListTile({
-    super.key, required this.data,
+    super.key,
+    required this.data,
+    required this.onDeleteTap,
+    required this.onEditTap,
   });
 
   final TaskData data;
@@ -28,13 +33,13 @@ class TaskListTile extends StatelessWidget {
               ),
               const Spacer(),
               IconButton(
-                  onPressed: () {},
+                  onPressed: onDeleteTap,
                   icon: Icon(
                     Icons.delete_forever_outlined,
                     color: Colors.red.shade300,
                   )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: onEditTap,
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.green,
