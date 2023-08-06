@@ -15,4 +15,7 @@ class Urls {
       '$_baseUrl/updateTaskStatus/$id/$status';
 
   static String updateProfile = '$_baseUrl/profileUpdate';
+  static String sendOtpToEmail(String email) => '$_baseUrl/RecoverVerifyEmail/$email';
+  static String otpVerify(String email, String otp) => '$_baseUrl/RecoverVerifyOTP/$email/$otp';
+  static String resetPassword = '$_baseUrl/RecoverResetPass';
 }

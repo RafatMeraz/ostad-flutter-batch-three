@@ -11,6 +11,7 @@ import 'package:intro_widget/ui/screens/auth/login_screen.dart';
 class NetworkCaller {
   Future<NetworkResponse> getRequest(String url) async {
     try {
+      log(url);
       Response response = await get(Uri.parse(url),
           headers: {'token': AuthUtility.userInfo.token.toString()});
       log(response.statusCode.toString());
