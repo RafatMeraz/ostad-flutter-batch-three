@@ -99,7 +99,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       body: ScreenBackground(
         child: Column(
           children: [
-            const UserProfileBanner(),
+            const UserProfileAppBar(),
             _getCountSummaryInProgress
                 ? const LinearProgressIndicator()
                 : Padding(
@@ -128,6 +128,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   getNewTasks();
+                  getCountSummary();
                 },
                 child: _getNewTaskInProgress
                     ? const Center(
