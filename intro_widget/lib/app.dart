@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intro_widget/ui/screens/splash_screen.dart';
 import 'package:intro_widget/ui/state_managers/login_controller.dart';
+import 'package:intro_widget/ui/state_managers/summary_count_controller.dart';
 
 class TaskManagerApp extends StatefulWidget {
   static GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
@@ -80,5 +81,6 @@ class ControllerBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<LoginController>(LoginController());
+    Get.put<SummaryCountController>(SummaryCountController());
   }
 }
