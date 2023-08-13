@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^2.2.0
   image_picker: ^1.0.1
   cached_network_image: ^3.2.3
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
