@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ostad.firebase_intro">
-   <application
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <application
         android:label="firebase_intro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +33,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="notification_channel" />
     </application>
 </manifest>
