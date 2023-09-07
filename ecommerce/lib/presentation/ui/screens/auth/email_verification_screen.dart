@@ -1,6 +1,9 @@
 import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+import 'otp_verification_screen.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({Key? key}) : super(key: key);
@@ -37,12 +40,21 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 )
               ),
               const SizedBox(height: 24,),
-              TextFormField(),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Email'
+                ),
+              ),
               const SizedBox(height: 16,),
               SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {}, child: const Text('Next')))
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(const OTPVerificationScreen());
+                  },
+                  child: const Text('Next'),
+                ),
+              ),
             ],
           ),
         ),
