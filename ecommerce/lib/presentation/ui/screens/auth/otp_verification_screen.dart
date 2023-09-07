@@ -1,7 +1,9 @@
+import 'package:ecommerce/presentation/ui/screens/auth/complete_profile_screen.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
 import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
@@ -83,7 +85,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.offAll(const CompleteProfileScreen());
+                    },
                     child: const Text('Next'),
                   ),
                 ),
@@ -99,7 +103,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           text: '120s',
                           style: TextStyle(
                               color: AppColors.primaryColor,
-                              fontWeight: FontWeight.bold)),
+                              fontWeight: FontWeight.bold,
+                          ),
+                      ),
                     ],
                   ),
                 ),
