@@ -1,4 +1,4 @@
-import 'package:ecommerce/presentation/ui/screens/category_list_screen.dart';
+import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
 import 'package:ecommerce/presentation/ui/widgets/category_card.dart';
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(
                 title: 'Categories',
                 onTap: () {
-                  Get.to(const CategoryListScreen());
+                  Get.find<MainBottomNavController>().changeScreen(1);
                 },
               ),
               const SizedBox(
