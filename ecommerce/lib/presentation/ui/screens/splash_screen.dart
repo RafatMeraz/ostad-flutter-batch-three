@@ -1,3 +1,4 @@
+import 'package:ecommerce/presentation/state_holders/auth_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/auth/email_verification_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
@@ -19,9 +20,13 @@ class _SplashScreenState extends State<SplashScreen> {
     goToNextScreen();
   }
 
-  void goToNextScreen() {
+  Future<void> goToNextScreen() async {
+    await AuthController.getAccessToken();
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Get.offAll(const EmailVerificationScreen());
+      Get.offAll(() => AuthController.isLoggedIn
+          ? const MainBottomNavScreen()
+          : const EmailVerificationScreen(),
+      );
     });
   }
 
