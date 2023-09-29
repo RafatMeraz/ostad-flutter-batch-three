@@ -4,7 +4,10 @@ import 'package:ecommerce/data/services/network_caller.dart';
 import 'package:ecommerce/data/utility/urls.dart';
 import 'package:get/get.dart';
 
-class ProductController extends GetxController {
+// Number of lines : 35
+// SRP - Single Responsibility Principle
+
+class PopularProductController extends GetxController {
   bool _getPopularProductsInProgress = false;
   ProductModel _popularProductModel = ProductModel();
   String _errorMessage = '';
