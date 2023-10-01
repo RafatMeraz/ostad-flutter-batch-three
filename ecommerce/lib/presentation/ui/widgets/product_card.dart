@@ -1,7 +1,6 @@
 import 'package:ecommerce/data/models/product.dart';
 import 'package:ecommerce/presentation/ui/screens/product_details_screen.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
-import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,7 @@ class ProductCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
-        Get.to(const ProductDetailsScreen());
+        Get.to(ProductDetailsScreen(productId: product.id!,));
       },
       child: Card(
         shadowColor: AppColors.primaryColor.withOpacity(0.1),

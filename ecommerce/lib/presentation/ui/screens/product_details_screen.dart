@@ -1,11 +1,15 @@
+import 'package:ecommerce/data/models/product_details.dart';
+import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
 import 'package:ecommerce/presentation/ui/widgets/custom_stepper.dart';
 import 'package:ecommerce/presentation/ui/widgets/home/product_image_slider.dart';
 import 'package:ecommerce/presentation/ui/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final int productId;
+  const ProductDetailsScreen({super.key, required this.productId});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -13,14 +17,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
-  List<Color> colors = [
-    Colors.deepOrange,
-    Colors.amber,
-    Colors.blue,
-    Colors.yellow,
-    Colors.pink,
-    Colors.black,
-  ];
+  List<String> colors = [];
 
   List<String> sizes = [
     'S',
@@ -34,35 +31,62 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int _selectedColorIndex = 0;
   int _selectedSizeIndex = 0;
 
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Stack(
+      body: GetBuilder<ProductDetailsController>(
+        builder: (productDetailsController) {
+          if (productDetailsController.getProductDetailsInProgress) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        const ProductImageSlider(),
-                        productDetailsAppBar,
-                      ],
+                        Stack(
+                          children: [
+                            ProductImageSlider(
+                              imageList: [
+                                productDetailsController.productDetails.img1 ?? '',
+                                productDetailsController.productDetails.img2 ?? '',
+                                productDetailsController.productDetails.img3 ?? '',
+                                productDetailsController.productDetails.img4 ?? '',
+                              ],
+                            ),
+                            productDetailsAppBar,
+                          ],
+                        ),
+                      productDetails(productDetailsController.productDetails,
+                          productDetailsController.availableColors),
+                    ],
                     ),
-                    productDetails,
-                  ],
+                  ),
                 ),
-              ),
+                cartToCartBottomContainer,
+              ],
             ),
-            cartToCartBottomContainer,
-          ],
-        ),
+          );
+        }
       ),
     );
   }
 
-  Padding get productDetails {
+  Padding productDetails(ProductDetails productDetails, List<String> colors) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -70,10 +94,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                   child: Text(
-                'Addidas Shoe HK23454 - Black Edition',
-                style: TextStyle(
+                productDetails.product?.title ?? '',
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5),
@@ -90,17 +114,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           Row(
             children: [
-              const Wrap(
+              Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.star,
                     size: 18,
                     color: Colors.amber,
                   ),
                   Text(
-                    '4.5',
-                    style: TextStyle(
+                    '${productDetails.product?.star ?? 0}',
+                    style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -145,6 +169,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
               itemBuilder: (context, index) {
+                print(colors[index]);
                 return InkWell(
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -155,7 +180,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   },
                   child: CircleAvatar(
                     radius: 18,
-                    backgroundColor: colors[index],
+                    // backgroundColor: HexColor.fromHex(colors[index]),
                     child: _selectedColorIndex == index
                         ? const Icon(
                             Icons.done,
@@ -192,7 +217,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 onSelected: (int selectedSize) {
                   _selectedSizeIndex = selectedSize;
                 },
-                sizes: sizes,
+                sizes: productDetails.size?.split(',') ?? [],
               ),
             ),
           ),
@@ -207,9 +232,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(
             height: 16,
           ),
-          const Text(
-              '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                          '''),
+          Text(productDetails.des ?? ''),
         ],
       ),
     );
