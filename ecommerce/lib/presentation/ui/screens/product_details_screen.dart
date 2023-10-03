@@ -1,4 +1,6 @@
+import 'package:ecommerce/data/models/product.dart';
 import 'package:ecommerce/data/models/product_details.dart';
+import 'package:ecommerce/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
 import 'package:ecommerce/presentation/ui/widgets/custom_stepper.dart';
@@ -16,17 +18,6 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-
-  List<String> colors = [];
-
-  List<String> sizes = [
-    'S',
-    'M',
-    'L',
-    'XL',
-    'XXL',
-    'XXXL'
-  ];
 
   int _selectedColorIndex = 0;
   int _selectedSizeIndex = 0;
@@ -77,8 +68,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                 ),
-                cartToCartBottomContainer,
-              ],
+              cartToCartBottomContainer(
+                  productDetailsController.productDetails,
+                  productDetailsController.availableColors,
+                  productDetailsController.availableSizes,
+              ),
+            ],
             ),
           );
         }
@@ -252,7 +247,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Container get cartToCartBottomContainer {
+  Container cartToCartBottomContainer(ProductDetails details, List<String> colors, List<String> sizes) {
     return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
@@ -282,8 +277,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ],
                 ),
                 SizedBox(
-                    width: 120,
-                    child: ElevatedButton(onPressed: () {}, child: const Text('Add to cart'),),)
+                  width: 120,
+                  child: GetBuilder<AddToCartController>(
+                    builder: (addToCartController) {
+                      if (addToCartController.addToCartInProgress) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ElevatedButton(
+                        onPressed: () async {
+                          final result = await addToCartController.addToCart(
+                              details.id!,
+                              colors[_selectedColorIndex].toString(),
+                              sizes[_selectedSizeIndex],
+                          );
+                          if (result) {
+                            Get.snackbar('Added to cart',
+                                'This product has been added to cart list',
+                                snackPosition: SnackPosition.BOTTOM);
+                          }
+                        },
+                        child: const Text('Add to cart'),
+                      );
+                    }
+                  ),
+                )
               ],
             ),
           );
