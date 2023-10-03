@@ -115,7 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return CategoryCard(
-                            categoryData: categoryController.categoryModel.data![index],
+                            categoryData: categoryController.categoryModel.data![index], onTap: () {
+                            Get.to(ProductListScreen(
+                                categoryId: categoryController
+                                    .categoryModel.data![index].id!));
+                          },
                           );
                         });
                   }
@@ -127,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(
                 title: 'Popular',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                  // Get.to(const ProductListScreen());
                 },
               ),
               SizedBox(
@@ -157,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(
                 title: 'Special',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                  // Get.to(const ProductListScreen());
                 },
               ),
               SizedBox(
@@ -187,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(
                 title: 'New',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                  // Get.to(const ProductListScreen());
                 },
               ),
               SizedBox(

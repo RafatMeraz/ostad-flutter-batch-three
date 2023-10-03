@@ -41,6 +41,7 @@ class ProductDetailsController extends GetxController {
   }
 
   void _convertStringToColor(String color) {
+    _availableColors.clear();
     final List<String> splittedColors = color.split(',');
     for (String c in splittedColors) {
       if (c.isNotEmpty) {

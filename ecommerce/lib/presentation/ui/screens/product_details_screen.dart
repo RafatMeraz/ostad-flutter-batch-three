@@ -1,8 +1,8 @@
-import 'package:ecommerce/data/models/product.dart';
 import 'package:ecommerce/data/models/product_details.dart';
 import 'package:ecommerce/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
+import 'package:ecommerce/presentation/ui/utility/color_extension.dart';
 import 'package:ecommerce/presentation/ui/widgets/custom_stepper.dart';
 import 'package:ecommerce/presentation/ui/widgets/home/product_image_slider.dart';
 import 'package:ecommerce/presentation/ui/widgets/size_picker.dart';
@@ -175,7 +175,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   },
                   child: CircleAvatar(
                     radius: 18,
-                    // backgroundColor: HexColor.fromHex(colors[index]),
+                    backgroundColor: HexColor.fromHex(colors[index]),
                     child: _selectedColorIndex == index
                         ? const Icon(
                             Icons.done,
