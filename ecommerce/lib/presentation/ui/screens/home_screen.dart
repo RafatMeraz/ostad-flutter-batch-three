@@ -36,6 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Spacer(),
             CircularIconButton(
+              icon: Icons.light_mode_outlined,
+              onTap: () {
+                // themeModeController.toggleThemeMode();
+                if (Get.isDarkMode) {
+                  Get.changeThemeMode(ThemeMode.light);
+                } else {
+                  Get.changeThemeMode(ThemeMode.dark);
+                }
+              },
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            CircularIconButton(
               icon: Icons.person,
               onTap: () {},
             ),

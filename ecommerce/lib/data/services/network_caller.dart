@@ -66,7 +66,7 @@ class NetworkCaller {
   static Future<void> gotoLogin() async {
     await AuthController.clear();
     Navigator.pushAndRemoveUntil(
-        CraftBay.globalKey.currentContext!,
+        CraftyBay.globalKey.currentContext!,
         MaterialPageRoute(builder: (context) => const EmailVerificationScreen()),
             (route) => false);
   }
