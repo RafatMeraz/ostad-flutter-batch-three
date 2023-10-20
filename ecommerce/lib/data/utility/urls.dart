@@ -21,4 +21,6 @@ class Urls {
   static const String addToCart = '$_baseUrl/CreateCartList';
 
   static const String getCartList = '$_baseUrl/CartList';
+
+  static String removeFromCart(int id) => '$_baseUrl/DeleteCartList/$id';
 }

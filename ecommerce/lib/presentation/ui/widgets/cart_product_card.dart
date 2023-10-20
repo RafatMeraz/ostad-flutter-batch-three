@@ -70,7 +70,9 @@ class CartProductCard extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.find<CartListController>().removeFromCart(cartData.productId!);
+                            },
                             icon: const Icon(Icons.delete_outline))
                       ],
                     ),
