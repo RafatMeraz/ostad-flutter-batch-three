@@ -35,14 +35,14 @@ class CartListController extends GetxController {
   }
 
   void changeItem(int cartId, int noOfItems) {
-    _cartListModel.data?.firstWhere((cartData) => cartData.id == cartId).numberOfItems = noOfItems;
+    _cartListModel.data?.firstWhere((cartData) => cartData.id == cartId).quantity = noOfItems;
     _calculateTotalPrice();
   }
 
   void _calculateTotalPrice() {
     _totalPrice = 0;
     for (CartData data in _cartListModel.data ?? []) {
-      _totalPrice += (data.numberOfItems *
+      _totalPrice += ((data.quantity ?? 1) *
           (double.tryParse(data.product?.price ?? '0') ?? 0));
     }
     update();

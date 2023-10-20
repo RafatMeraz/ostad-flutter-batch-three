@@ -1,5 +1,4 @@
 import 'package:ecommerce/presentation/state_holders/otp_verification_controller.dart';
-import 'package:ecommerce/presentation/ui/screens/auth/complete_profile_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce/presentation/ui/utility/app_colors.dart';
 import 'package:ecommerce/presentation/ui/utility/image_assets.dart';
@@ -59,7 +58,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                 ),
                 PinCodeTextField(
                   controller: _otpTEController,
-                  length: 4,
+                  length: 6,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
